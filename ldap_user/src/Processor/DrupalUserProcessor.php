@@ -387,7 +387,7 @@ class DrupalUserProcessor implements LdapUserAttributesInterface {
     ];
 
     // 2. Drupal user fields.
-    $user_fields = \Drupal::entityManager()->getFieldStorageDefinitions('user');
+    $user_fields = \Drupal::service('entity_field.manager')->getFieldStorageDefinitions('user');
 
     foreach ($user_fields as $field_name => $field_instance) {
       $field_id = "[field.$field_name]";

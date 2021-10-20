@@ -38,7 +38,7 @@ class ServerListBuilder extends ConfigEntityListBuilder {
     $server = Server::load($entity->id());
 
     $row = [];
-    $row['label'] = $this->getLabel($entity);
+    $row['label'] = $entity->label();
     $row['bind_method'] = ucfirst($server->getFormattedBind());
     if ($server->get('bind_method') == 'service_account') {
       $row['binddn'] = $server->get('binddn');
