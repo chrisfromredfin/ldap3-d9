@@ -7,6 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Link;
 use Drupal\ldap_authentication\Helper\LdapAuthenticationConfiguration;
 use Drupal\ldap_user\Helper\ExternalAuthenticationHelper;
 
@@ -103,7 +104,7 @@ function ldap_authentication_user_pass_validate(array &$form, FormStateInterface
   if ($account && ldap_authentication_ldap_authenticated($account)) {
     if ($config->get('passwordOption') != LdapAuthenticationConfiguration::$passwordFieldAllow) {
       if ($config->get('ldapUserHelpLinkUrl')) {
-        $helpLink = \Drupal::l($config->get('ldapUserHelpLinkText'),
+        $helpLink = Link::fromTextAndUrl($config->get('ldapUserHelpLinkText'),
           Url::fromUri($config->get('ldapUserHelpLinkUrl')));
         $form_state->setErrorByName('name', t(
           'You may not reset your password here. You must reset your password via the directions at @link.',
@@ -150,7 +151,7 @@ function ldap_authentication_form_user_form_alter(&$form, FormStateInterface $fo
         $form['account']['current_pass']['#disabled'] = TRUE;
         $form['account']['pass']['#disabled'] = TRUE;
         if ($config->get('ldapUserHelpLinkUrl')) {
-          $form['account']['current_pass']['#description'] = \Drupal::l($config->get('ldapUserHelpLinkText'), Url::fromUri($config->get('ldapUserHelpLinkUrl')));
+          $form['account']['current_pass']['#description'] = Link::fromTextAndUrl($config->get('ldapUserHelpLinkText'), Url::fromUri($config->get('ldapUserHelpLinkUrl')));
         }
         else {
           $form['account']['current_pass']['#description'] = t('The password cannot be changed using this website.');
